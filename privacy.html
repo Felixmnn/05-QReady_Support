@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AGB & Datenschutz – Neue App</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --card: #0c1f44;
+      --muted: #9ca3af;
+      --text: #e5e7eb;
+      --brand: #007bff;
+      --radius: 14px;
+      --shadow: 0 20px 45px rgba(0,0,0,.35);
+    }
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .wrap { max-width: 920px; margin: 0 auto; padding: 24px; }
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 0; position: sticky; top: 0; backdrop-filter: blur(8px);
+    }
+    .brand h1 { font-size: 22px; margin: 0; }
+    h2 { margin-top: 1.8rem; color: var(--brand); }
+    p, ul { color: var(--text); }
+    .card { background: var(--card); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); margin-bottom: 18px; }
+    footer { margin-top: 3rem; font-size: 0.9rem; color: var(--muted); text-align: center; }
+    .toggle {
+      display: flex; align-items: center; gap: 8px; cursor: pointer;
+    }
+    .toggle input {
+      width: 40px; height: 20px; appearance: none;
+      background: #444; border-radius: 20px;
+      position: relative; outline: none; cursor: pointer;
+      transition: background 0.3s;
+    }
+    .toggle input:checked { background: var(--brand); }
+    .toggle input::before {
+      content: ''; width: 16px; height: 16px; background: white;
+      border-radius: 50%; position: absolute; top: 2px; left: 2px;
+      transition: transform 0.3s;
+    }
+    .toggle input:checked::before { transform: translateX(20px); }
+    a { color: #66b2ff; text-decoration: none; }
+    a:hover { color: #99ccff; text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <h1 id="page-title"></h1>
+      </div>
+      <div class="toggle">
+        <span>DE</span>
+        <input type="checkbox" id="langToggle" />
+        <span>EN</span>
+      </div>
+    </header>
+
+    <p id="date"></p>
+
+    <section class="card">
+      <h2 id="usage-title"></h2>
+      <div id="usage-content"></div>
+    </section>
+
+    <section class="card">
+      <h2 id="pricing-title"></h2>
+      <div id="pricing-content"></div>
+    </section>
+
+    <section class="card">
+      <h2 id="availability-title"></h2>
+      <div id="availability-content"></div>
+    </section>
+
+    <section class="card">
+      <h2 id="privacy-title"></h2>
+      <div id="privacy-content"></div>
+    </section>
+
+    <section class="card">
+      <h2 id="legal-title"></h2>
+      <div id="legal-content"></div>
+    </section>
+
+    <section class="card">
+      <h2 id="multilingual-title"></h2>
+      <div id="multilingual-content"></div>
+    </section>
+
+    <section class="card">
+      <h2 id="special-title"></h2>
+      <div id="special-content"></div>
+    </section>
+
+    <footer id="footer"></footer>
+  </div>
+
+  <script>
+    const texts = {
+      de: {
+        pageTitle: "AGB & Datenschutz – Neue App",
+        date: "Stand: September 2025",
+        usageTitle: "Nutzung & Rechte",
+        usageContent: `
+          <strong>Für wen gelten die AGB?</strong><br>
+          Gilt für alle registrierten Nutzer:innen der App.<br><br>
+          <strong>Registrierung:</strong><br>
+          Registrierung erfolgt über E-Mail-Anbieter. Angabe des Bildungsbereichs optional, dient zur Personalisierung der Module.<br><br>
+          <strong>Nutzungsrechte:</strong><br>
+          Private Module sind nur für den Nutzer sichtbar. Öffentliche Module können kopiert werden, wobei die Urheberrechte beachtet werden müssen.<br><br>
+          <strong>Verbotene Nutzung:</strong><br>
+          Reverse Engineering, automatisiertes Erstellen oder Kopieren von UI-Elementen ist untersagt.
+        `,
+        pricingTitle: "Preise & Käufe",
+        pricingContent: `
+          <strong>Kosten:</strong><br>
+          Die App ist grundsätzlich kostenlos. Optionale In-App-Käufe (Chips) verfügbar.<br><br>
+          <strong>Zahlungen:</strong><br>
+          Zahlung über Google Pay und Apple Pay. Chips können gegen Energie getauscht werden.<br><br>
+          <strong>Widerruf:</strong><br>
+          Kein Rückgaberecht für bereits verbrauchte Energie. Kein Abo-Modell.<br><br>
+          <strong>Zahlungsverzug:</strong><br>
+          Bei Zahlungsproblemen kann der Account bis zur Klärung gesperrt werden.
+        `,
+        availabilityTitle: "Verfügbarkeit & Support",
+        availabilityContent: `
+          <strong>Bereitstellung:</strong><br>
+          Keine garantierte Mindestverfügbarkeit. Ziel ist dauerhafte Verfügbarkeit.<br><br>
+          <strong>Support & Updates:</strong><br>
+          Support via E-Mail oder Kontaktformular. Regelmäßige Updates geplant.<br><br>
+          <strong>Haftung:</strong><br>
+          Keine Haftung für Datenverlust oder App-Abstürze. Exportfunktion für Datensicherung vorhanden.
+        `,
+        privacyTitle: "Datenschutz",
+        privacyContent: `
+          <strong>Erhobene Daten:</strong><br>
+          Registrierungsdaten, Lernverhalten, genutzte Features, letzte Anmeldung, Herkunftsland, Sprache etc.<br><br>
+          <strong>Verwendungszwecke:</strong><br>
+          Personalisierung, Funktionsgewährleistung, Weiterentwicklung der Plattform.<br><br>
+          <strong>Rechte der Nutzer:innen:</strong><br>
+          Recht auf Auskunft, Berichtigung, Löschung, Datenportabilität. Accountlöschung und Datenexport möglich.
+        `,
+        legalTitle: "Rechtliches",
+        legalContent: `
+          <strong>Geltendes Recht:</strong><br>
+          Es gilt deutsches Recht. Gerichtsstand ist der Sitz des Unternehmens.<br><br>
+          <strong>AGB-Änderungen:</strong><br>
+          Änderungen werden per App oder E-Mail bekanntgegeben.<br><br>
+          <strong>Salvatorische Klausel:</strong><br>
+          Sollten einzelne Bestimmungen unwirksam sein, bleibt der Rest der AGB gültig.
+        `,
+        multilingualTitle: "Mehrsprachigkeit",
+        multilingualContent: `
+          <strong>Rechtlich gültige Sprache:</strong><br>
+          Im Zweifel gilt die deutsche Fassung.<br><br>
+          <strong>Sprachliche Benachrichtigungen:</strong><br>
+          AGB-Änderungen werden in allen unterstützten Sprachen angezeigt.
+        `,
+        specialTitle: "Besonderheiten",
+        specialContent: `
+          <strong>Community-Funktionen:</strong><br>
+          Module können kopiert, erstellt und gemeldet werden. Nutzer müssen die Community-Regeln beachten.<br><br>
+          <strong>KI-Funktionen:</strong><br>
+          KI wird verwendet, wenn der Nutzer dies explizit auswählt (z. B. 'Mit KI erstellen'). Alle KI-Nutzungen werden transparent angezeigt.
+        `,
+        footer: "© 2025 Neue App – Alle Rechte vorbehalten."
+      },
+      en: {
+        pageTitle: "Terms & Privacy – New App",
+        date: "Effective: September 2025",
+        usageTitle: "Usage & Rights",
+        usageContent: `
+          <strong>Applicable For:</strong><br>
+          Applies to all registered users of the app.<br><br>
+          <strong>Registration:</strong><br>
+          Registration via email provider. Providing educational field is optional, used for module personalization.<br><br>
+          <strong>Usage Rights:</strong><br>
+          Private modules are visible only to the user. Public modules can be copied, respecting copyright.<br><br>
+          <strong>Prohibited Usage:</strong><br>
+          No reverse engineering, automated creation, or copying of UI elements.
+        `,
+        pricingTitle: "Pricing & Purchases",
+        pricingContent: `
+          <strong>Costs:</strong><br>
+          The app is generally free. Optional in-app purchases (Chips) are available.<br><br>
+          <strong>Payments:</strong><br>
+          Payment via Google Pay and Apple Pay. Chips can be exchanged for energy.<br><br>
+          <strong>Cancellation:</strong><br>
+          No return rights for already used energy. No subscription model.<br><br>
+          <strong>Late Payment:</strong><br>
+          Account may be suspended in case of payment issues until resolved.
+        `,
+        availabilityTitle: "Availability & Support",
+        availabilityContent: `
+          <strong>Provision:</strong><br>
+          No guaranteed minimum availability. Aim is continuous availability.<br><br>
+          <strong>Support & Updates:</strong><br>
+          Support via email or contact form. Regular updates planned.<br><br>
+          <strong>Liability:</strong><br>
+          No liability for data loss or app crashes. Export function available.
+        `,
+        privacyTitle: "Privacy",
+        privacyContent: `
+          <strong>Collected Data:</strong><br>
+          Registration data, learning behavior, used features, last login, country, language, etc.<br><br>
+          <strong>Purpose:</strong><br>
+          Personalization, functionality assurance, platform development.<br><br>
+          <strong>User Rights:</strong><br>
+          Right to access, correction, deletion, data portability. Account deletion and data export possible.
+        `,
+        legalTitle: "Legal",
+        legalContent: `
+          <strong>Applicable Law:</strong><br>
+          German law applies. Court of jurisdiction is the company’s registered office.<br><br>
+          <strong>Terms Changes:</strong><br>
+          Changes are announced via app or email.<br><br>
+          <strong>Severability:</strong><br>
+          If individual provisions are invalid, the rest of the terms remain valid.
+        `,
+        multilingualTitle: "Multilingual",
+        multilingualContent: `
+          <strong>Legally Binding Language:</strong><br>
+          In case of doubt, the German version prevails.<br><br>
+          <strong>Language Notifications:</strong><br>
+          Term changes are shown in all supported languages.
+        `,
+        specialTitle: "Special Features",
+        specialContent: `
+          <strong>Community Features:</strong><br>
+          Modules can be copied, created, and reported. Users must follow community rules.<br><br>
+          <strong>AI Features:</strong><br>
+          AI is used only if explicitly selected by the user (e.g., 'Create with AI'). All AI usage is transparent.
+        `,
+        footer: "© 2025 New App – All rights reserved."
+      }
+    };
+
+    const langToggle = document.getElementById('langToggle');
+    let currentLang = 'de';
+
+    function updateTexts() {
+      const t = texts[currentLang];
+      document.getElementById('page-title').textContent = t.pageTitle;
+      document.getElementById('date').textContent = t.date;
+      document.getElementById('usage-title').textContent = t.usageTitle;
+      document.getElementById('usage-content').innerHTML = t.usageContent;
+      document.getElementById('pricing-title').textContent = t.pricingTitle;
+      document.getElementById('pricing-content').innerHTML = t.pricingContent;
+      document.getElementById('availability-title').textContent = t.availabilityTitle;
+      document.getElementById('availability-content').innerHTML = t.availabilityContent;
+      document.getElementById('privacy-title').textContent = t.privacyTitle;
+      document.getElementById('privacy-content').innerHTML = t.privacyContent;
+      document.getElementById('legal-title').textContent = t.legalTitle;
+      document.getElementById('legal-content').innerHTML = t.legalContent;
+      document.getElementById('multilingual-title').textContent = t.multilingualTitle;
+      document.getElementById('multilingual-content').innerHTML = t.multilingualContent;
+      document.getElementById('special-title').textContent = t.specialTitle;
+      document.getElementById('special-content').innerHTML = t.specialContent;
+      document.getElementById('footer').textContent = t.footer;
+    }
+
+    langToggle.addEventListener('change', () => {
+      currentLang = langToggle.checked ? 'en' : 'de';
+      updateTexts();
+    });
+
+    updateTexts();
+  </script>
+</body>
+</html>
