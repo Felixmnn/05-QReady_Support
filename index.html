@@ -126,6 +126,8 @@
         <a href="#changelog" data-i18n="nav.changelog"></a>
         <a href="#fehler-melden" data-i18n="nav.reportBug"></a>
         <a href="#rechtliches" data-i18n="nav.legal"></a>
+        <a href="./dataRemoval.html" data-i18n="nav.dataRemoval"></a>
+        <a href="./katexExamples.html" data-i18n="nav.katexExamples"></a>
       </nav>
       <div class="lang-toggle" aria-label="Language toggle">
         <span class="lang-label">DE</span>
@@ -226,6 +228,18 @@
       <p class="muted" data-i18n="legal.note"></p>
     </section>
 
+    <section class="card" id="datenloeschung" aria-labelledby="datenloeschung-t" style="margin-top:18px">
+      <h3 id="datenloeschung-t" data-i18n="dataRemoval.title"></h3>
+      <p class="muted" data-i18n="dataRemoval.text"></p>
+      <a class="btn" href="./dataRemoval.html" data-i18n="dataRemoval.link"></a>
+    </section>
+
+    <section class="card" id="katex-examples" aria-labelledby="katex-t" style="margin-top:18px">
+      <h3 id="katex-t" data-i18n="katexExamples.title"></h3>
+      <p class="muted" data-i18n="katexExamples.text"></p>
+      <a class="btn" href="./katexExamples.html" data-i18n="katexExamples.link"></a>
+    </section>
+
     <footer>
       <div class="row" style="justify-content: space-between">
         <div>&copy; <span id="year"></span> <span data-i18n="footer.publisher"></span> <span data-i18n="footer.rights"></span></div>
@@ -236,7 +250,7 @@
 
   <script>
     const i18n = {
-    en: {
+      en: {
         meta: {
           title: "Support – Q-Ready",
           desc: "Official Q-Ready support page. Help, FAQ, contact and changelog.",
@@ -253,7 +267,9 @@
           faq: "FAQ",
           changelog: "Changelog",
           reportBug: "Report a bug",
-          legal: "Legal"
+          legal: "Legal",
+          dataRemoval: "Data Removal",
+          katexExamples: "KaTeX Examples"
         },
         hero: {
           title: "Welcome to Q-Ready Support",
@@ -319,13 +335,23 @@
           imprint: "Imprint",
           note: "Note: Even though we don’t collect or store data, an imprint and a privacy policy are legally required."
         },
+        dataRemoval: {
+          title: "Data Removal",
+          text: "Information on how to request deletion of your data in Q-Ready.",
+          link: "Go to Data Removal"
+        },
+        katexExamples: {
+          title: "KaTeX Examples",
+          text: "See examples of supported KaTeX syntax for mathematical expressions.",
+          link: "Show KaTeX Examples"
+        },
         footer: {
           publisher: "<PUBLISHER_NAME>.",
           rights: "All rights reserved.",
           contact: "Contact:"
         }
       },
-    de: {
+      de: {
         meta: {
           title: "Support – Q-Ready",
           desc: "Offizielle Support-Seite für Q-Ready. Hilfe, FAQ, Kontakt und Changelog.",
@@ -342,7 +368,9 @@
           faq: "FAQ",
           changelog: "Changelog",
           reportBug: "Fehler melden",
-          legal: "Rechtliches"
+          legal: "Rechtliches",
+          dataRemoval: "Datenlöschung",
+          katexExamples: "KaTeX Beispiele"
         },
         hero: {
           title: "Willkommen beim Q-Ready Support",
@@ -407,6 +435,16 @@
             privacy: "Datenschutzerklärung",
             imprint: "Impressum",
             note: "Hinweis: Auch wenn wir keine Daten erheben oder speichern, sind ein Impressum und eine Datenschutzerklärung gesetzlich vorgeschrieben."
+        },
+        dataRemoval: {
+          title: "Datenlöschung",
+          text: "Informationen, wie du die Löschung deiner Daten in Q-Ready beantragen kannst.",
+          link: "Zur Datenlöschung"
+        },
+        katexExamples: {
+          title: "KaTeX Beispiele",
+          text: "Beispiele für unterstützte KaTeX-Syntax für mathematische Ausdrücke.",
+          link: "KaTeX Beispiele anzeigen"
         },
         footer: {
             publisher: "<PUBLISHER_NAME>.",

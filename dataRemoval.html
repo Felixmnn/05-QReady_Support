@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Datenlöschung – Meine App</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --card: #0c1f44;
+      --muted: #9ca3af;
+      --text: #e5e7eb;
+      --brand: #007bff;
+      --radius: 14px;
+      --shadow: 0 20px 45px rgba(0,0,0,.35);
+    }
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .wrap { max-width: 920px; margin: 0 auto; padding: 24px; }
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 0; position: sticky; top: 0; backdrop-filter: blur(8px);
+    }
+    .brand h1 { font-size: 22px; margin: 0; }
+    h2 { margin-top: 1.8rem; color: var(--brand); }
+    p, ul { color: var(--text); }
+    .card { background: var(--card); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); margin-bottom: 18px; }
+    footer { margin-top: 3rem; font-size: 0.9rem; color: var(--muted); text-align: center; }
+    .toggle {
+      display: flex; align-items: center; gap: 8px; cursor: pointer;
+    }
+    .toggle input {
+      width: 40px; height: 20px; appearance: none;
+      background: #444; border-radius: 20px;
+      position: relative; outline: none; cursor: pointer;
+      transition: background 0.3s;
+    }
+    .toggle input:checked { background: var(--brand); }
+    .toggle input::before {
+      content: ''; width: 16px; height: 16px; background: white;
+      border-radius: 50%; position: absolute; top: 2px; left: 2px;
+      transition: transform 0.3s;
+    }
+    .toggle input:checked::before { transform: translateX(20px); }
+    a { color: #66b2ff; text-decoration: none; }
+    a:hover { color: #99ccff; text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <h1 id="page-title"></h1>
+      </div>
+      <div class="toggle">
+        <span>DE</span>
+        <input type="checkbox" id="langToggle" />
+        <span>EN</span>
+      </div>
+    </header>
+
+    <p id="date"></p>
+
+    <section class="card">
+      <h2 id="manual-title"></h2>
+      <div id="manual-content"></div>
+    </section>
+
+    <section class="card">
+      <h2 id="profile-title"></h2>
+      <div id="profile-content"></div>
+    </section>
+
+    <section class="card">
+      <h2 id="exceptions-title"></h2>
+      <div id="exceptions-content"></div>
+    </section>
+
+    <section class="card">
+      <h2 id="contact-title"></h2>
+      <div id="contact-content"></div>
+    </section>
+
+    <footer id="footer"></footer>
+  </div>
+
+  <script>
+    const texts = {
+      de: {
+        pageTitle: "Datenlöschung – Meine App",
+        date: "Stand: Oktober 2025",
+        manualTitle: "Welche Daten manuell gelöscht werden können",
+        manualContent: `
+          <ul>
+            <li>Von Nutzer:innen erstellte Module und Fragen können einzeln gelöscht werden.</li>
+            <li>Alle Fragen, die zu einem Modul gehören, werden beim Löschen des Moduls ebenfalls entfernt.</li>
+          </ul>
+        `,
+        profileTitle: "Welche Daten beim Löschen des Profils gelöscht werden",
+        profileContent: `
+          <ul>
+            <li>Alle vom Nutzer erstellten Module</li>
+            <li>Alle Nutzungsdaten des Nutzers</li>
+            <li>Alle In-App-Käufe wie z. B. Energie, Coins etc.</li>
+          </ul>
+          <p><strong>Wichtig:</strong> Der Prozess ist endgültig und kann nicht rückgängig gemacht werden.</p>
+        `,
+        exceptionsTitle: "Welche Daten nicht gelöscht werden",
+        exceptionsContent: `
+          <p>Sollte ein Nutzer eines seiner Module oder Fragen öffentlich gemacht haben und ein anderer Nutzer eine Kopie erstellt haben, so bleibt diese Kopie erhalten.</p>
+          <p>Das gilt ebenfalls für kopierte Fragen. Möchte ein Nutzer diese entfernen, muss dies beim kopierten Modul erfolgen, da diese an die Kopie gebunden sind.</p>
+        `,
+        contactTitle: "Kontakt für Löschanfragen",
+        contactContent: `
+          E-Mail: <a href="mailto:contact.qready@gmail.com">contact.qready@gmail.com</a><br>
+        `,
+        footer: "© 2025 Meine App – Alle Rechte vorbehalten."
+      },
+      en: {
+        pageTitle: "Data Deletion – QReady",
+        date: "Effective: October 2025",
+        manualTitle: "Data that can be manually deleted",
+        manualContent: `
+          <ul>
+            <li>User-created modules and questions can be deleted individually.</li>
+            <li>All questions belonging to a module are also deleted when the module itself is removed.</li>
+          </ul>
+        `,
+        profileTitle: "Data deleted when the profile is removed",
+        profileContent: `
+          <ul>
+            <li>All modules created by the user</li>
+            <li>All user activity and usage data</li>
+            <li>All in-app purchases such as energy, coins, etc.</li>
+          </ul>
+          <p><strong>Important:</strong> This process is permanent and cannot be undone.</p>
+        `,
+        exceptionsTitle: "Data that will not be deleted",
+        exceptionsContent: `
+          <p>If a user has made a module or question publicly available and another user has copied it, the copy will remain.</p>
+          <p>This also applies to copied questions. To delete these, they must be removed from the copied module, as they are bound to it.</p>
+        `,
+        contactTitle: "Contact for deletion requests",
+        contactContent: `
+          Email: <a href="mailto:privacy@my-app.com">privacy@my-app.com</a><br>
+        `,
+        footer: "© 2025 QReady – All rights reserved."
+      }
+    };
+
+    const langToggle = document.getElementById('langToggle');
+    let currentLang = 'de';
+
+    function updateTexts() {
+      const t = texts[currentLang];
+      document.getElementById('page-title').textContent = t.pageTitle;
+      document.getElementById('date').textContent = t.date;
+      document.getElementById('manual-title').textContent = t.manualTitle;
+      document.getElementById('manual-content').innerHTML = t.manualContent;
+      document.getElementById('profile-title').textContent = t.profileTitle;
+      document.getElementById('profile-content').innerHTML = t.profileContent;
+      document.getElementById('exceptions-title').textContent = t.exceptionsTitle;
+      document.getElementById('exceptions-content').innerHTML = t.exceptionsContent;
+      document.getElementById('contact-title').textContent = t.contactTitle;
+      document.getElementById('contact-content').innerHTML = t.contactContent;
+      document.getElementById('footer').textContent = t.footer;
+    }
+
+    langToggle.addEventListener('change', () => {
+      currentLang = langToggle.checked ? 'en' : 'de';
+      updateTexts();
+    });
+
+    updateTexts();
+  </script>
+</body>
+</html>

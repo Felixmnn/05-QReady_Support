@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KaTeX Beispiele – Meine App</title>
+
+  <!-- KaTeX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #0b1220;
+      --card: #0c1f44;
+      --muted: #9ca3af;
+      --text: #e5e7eb;
+      --brand: #007bff;
+      --radius: 14px;
+      --shadow: 0 20px 45px rgba(0,0,0,.35);
+    }
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .wrap { max-width: 920px; margin: 0 auto; padding: 24px; }
+    header { padding: 20px 0; }
+    .brand h1 { font-size: 22px; margin: 0; }
+    h2 { margin-top: 1.8rem; color: var(--brand); }
+    .card { background: var(--card); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); margin-bottom: 18px; }
+    footer { margin-top: 3rem; font-size: 0.9rem; color: var(--muted); text-align: center; }
+    .example {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px; 
+      align-items: stretch;
+      margin-bottom: 20px;
+    }
+    .code {
+      background: #1e293b;
+      padding: 12px;
+      border-radius: var(--radius);
+      font-family: monospace;
+      white-space: pre-wrap;
+      color: var(--text);
+      min-height: 50px;
+    }
+    .render {
+      background: #111827;
+      padding: 12px;
+      border-radius: var(--radius);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 50px;
+    }
+
+    /* Switch Styles */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 48px;
+      height: 24px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #3b3b3b;
+      transition: .3s;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      border-radius: 50%;
+      transition: .3s;
+    }
+
+    input:checked + .slider {
+      background: linear-gradient(135deg, #007bff, #a78bfa);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(24px);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header style="display:flex;justify-content:space-between;align-items:center;">
+      <div class="brand">
+        <h1 id="page-title">KaTeX Beispiele</h1>
+      </div>
+      <div style="display:flex;align-items:center;gap:18px;">
+        <div class="category-select" style="display:flex;align-items:center;gap:8px;">
+          <label for="category" id="category-label" style="font-size:13px;">Kategorie:</label>
+          <select id="category" style="border-radius:8px;padding:4px 10px;background:#1e293b;color:#e5e7eb;border:1px solid #3b3b3b;">
+            <option value="chemistry">Chemie</option>
+            <option value="math">Mathe</option>
+            <option value="physics">Physik</option>
+          </select>
+        </div>
+        <div class="lang-toggle" aria-label="Language toggle" style="display:flex;align-items:center;gap:8px;">
+          <span class="lang-label">DE</span>
+          <label class="switch" style="position:relative;width:48px;height:24px;display:inline-block;">
+            <input type="checkbox" id="langToggle" aria-label="Sprachumschalter / Language toggle" style="display:none;"/>
+            <span class="slider" style="position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#3b3b3b;transition:.3s;border-radius:999px;border:1px solid rgba(255,255,255,.12);"></span>
+          </label>
+          <span class="lang-label">EN</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="card">
+      <h2 id="formula-title">Gesammelte Formeln</h2>
+      <div id="formulaList"></div>
+    </section>
+
+    <footer id="footer-text">
+      © 2025 Meine App – KaTeX Beispiele
+    </footer>
+  </div>
+
+  <script>
+    // Beispiel-Arrays für jede Kategorie
+    const examples = {
+      chemistry: [
+        `\\mathrm{H_2O}`,
+        `\\mathrm{CO_2}`,
+        `\\mathrm{CH_3COOH}`,
+        `\\mathrm{NH_3}`,
+        `NaCl`,
+        `C_6H_{12}O_6`,
+        `Ag^+ + Cl^- -> AgCl v`,
+        `2H_2 + O_2 -> 2H_2O`,
+        `[Cu(NH_3)_4]^{2+}`,
+        `pH = -\\log[H^+]`,
+        
+      ],
+      math: [
+        `\\frac{a}{b}`,
+        `E = mc^2`,
+        `\\sum_{n=1}^\\infty \\frac{1}{n^2} = \\frac{\\pi^2}{6}`,
+        `\\int_0^\\infty e^{-x^2} \\, dx = \\frac{\\sqrt{\\pi}}{2}`,
+        `\\lim_{x \\to 0} \\frac{\\sin x}{x} = 1`,
+        `f(x) = \\begin{cases} x^2 & x \\ge 0 \\\\ -x & x < 0 \\end{cases}`,
+        `\\sqrt{\\frac{a^2 + b^2}{c^2}}`,
+        `\\int_0^1 x^n (1-x)^m \\, dx = \\frac{n! m!}{(n+m+1)!}`,
+        `\\sum_{k=0}^{n} \\binom{n}{k} x^k y^{n-k} = (x+y)^n`,
+        `\\prod_{n=1}^{\\infty} \\left(1 + \\frac{x^2}{n^2 \\pi^2}\\right) = \\frac{\\sinh x}{x}`,
+        
+      ],
+      physics: [
+        `\\nabla \\cdot \\mathbf{E} = \\frac{\\rho}{\\varepsilon_0}`,
+        `e^{i\\pi} + 1 = 0`,
+        `\\frac{\\partial u}{\\partial t} = D \\nabla^2 u`,
+        `F(x) = \\int_{-\\infty}^{x} f(t) \\, dt`,
+        `\\oint_{C} \\mathbf{F} \\cdot d\\mathbf{r} = \\iint_{S} (\\nabla \\times \\mathbf{F}) \\cdot d\\mathbf{S}`,
+        `\\sum_{n=0}^{\\infty} \\frac{(-1)^n}{(2n+1)!} x^{2n+1} = \\sin x`,
+        `\\begin{pmatrix} 1 & 2 \\\\ 3 & 4 \\end{pmatrix} \\begin{pmatrix} x \\\\ y \\end{pmatrix} = \\begin{pmatrix} 1 \\cdot x + 2 \\cdot y \\\\ 3 \\cdot x + 4 \\cdot y \\end{pmatrix}`,
+        `\\int_0^{2\\pi} \\frac{d\\theta}{1 + a \\cos\\theta} = \\frac{2\\pi}{\\sqrt{1-a^2}}, \\quad |a|<1`,
+        `\\int_0^\\infty x^{s-1} e^{-x} \\, dx = \\Gamma(s)`,
+        `\\vec{F} = m \\vec{a}`
+      ]
+    };
+
+    // i18n-Objekt für Übersetzungen
+    const i18n = {
+      de: {
+        pageTitle: "KaTeX Beispiele",
+        formulaTitle: "Gesammelte Formeln",
+        footer: "© 2025 Meine App – KaTeX Beispiele",
+        categoryLabel: "Kategorie:",
+        categories: {
+          chemistry: "Chemie",
+          math: "Mathe",
+          physics: "Physik"
+        }
+      },
+      en: {
+        pageTitle: "KaTeX Examples",
+        formulaTitle: "Collected Formulas",
+        footer: "© 2025 QReady – KaTeX Examples",
+        categoryLabel: "Category:",
+        categories: {
+          chemistry: "Chemistry",
+          math: "Math",
+          physics: "Physics"
+        }
+      }
+    };
+
+    function escapeBackslashes(str) {
+      return str.replace(/\\/g, "\\\\");
+    }
+
+    function renderFormula(tex, container) {
+      let codeEl = document.createElement("div");
+      codeEl.className = "code";
+      codeEl.textContent = escapeBackslashes(tex);
+
+      let renderEl = document.createElement("div");
+      renderEl.className = "render";
+
+      try {
+        katex.render(tex, renderEl, { throwOnError: false, displayMode: true });
+      } catch (err) {
+        renderEl.textContent = "Fehler: " + err.message;
+      }
+
+      let example = document.createElement("div");
+      example.className = "example";
+      example.appendChild(codeEl);
+      example.appendChild(renderEl);
+
+      container.appendChild(example);
+    }
+
+    function renderCategory(category) {
+      const listEl = document.getElementById("formulaList");
+      listEl.innerHTML = "";
+      examples[category].forEach(tex => renderFormula(tex, listEl));
+    }
+
+    function applyI18n(lang) {
+      document.documentElement.lang = lang;
+      document.getElementById("page-title").textContent = i18n[lang].pageTitle;
+      document.getElementById("formula-title").textContent = i18n[lang].formulaTitle;
+      document.getElementById("footer-text").textContent = i18n[lang].footer;
+      document.getElementById("category-label").textContent = i18n[lang].categoryLabel;
+      // Kategorie-Optionen übersetzen
+      const select = document.getElementById("category");
+      select.options[0].text = i18n[lang].categories.chemistry;
+      select.options[1].text = i18n[lang].categories.math;
+      select.options[2].text = i18n[lang].categories.physics;
+    }
+
+    // Sprachumschalter initialisieren
+    const toggle = document.getElementById('langToggle');
+    const stored = localStorage.getItem('omd.lang');
+    const initialLang = stored === 'de' || stored === 'en'
+      ? stored
+      : (navigator.language && navigator.language.toLowerCase().startsWith('de') ? 'de' : 'en');
+    toggle.checked = initialLang === 'en';
+    applyI18n(initialLang);
+
+    // Kategorie initialisieren
+    const select = document.getElementById("category");
+    let currentCategory = select.value;
+    renderCategory(currentCategory);
+
+    // Kategorie-Wechsel
+    select.addEventListener("change", function() {
+      currentCategory = this.value;
+      renderCategory(currentCategory);
+    });
+
+    // Sprachwechsel
+    toggle.addEventListener('change', () => {
+      const lang = toggle.checked ? 'en' : 'de';
+      localStorage.setItem('omd.lang', lang);
+      applyI18n(lang);
+    });
+
+    // Switch-Animation
+    const slider = document.querySelector('.slider');
+    toggle.addEventListener('input', () => {
+      if (toggle.checked) {
+        slider.style.background = 'linear-gradient(135deg, #007bff, #a78bfa)';
+        slider.style.transition = '.3s';
+        slider.style.border = '1px solid rgba(255,255,255,.12)';
+      } else {
+        slider.style.background = '#3b3b3b';
+      }
+    });
+  </script>
+</body>
+</html>
