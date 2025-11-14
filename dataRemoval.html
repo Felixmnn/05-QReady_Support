@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Datenlöschung – Meine App</title>
+  <title>Datenlöschung – QReady</title>
   <style>
     :root {
       --bg: #0b1220;
@@ -64,6 +64,13 @@
       </div>
     </header>
 
+    <section class="card">
+      <h2 id="contact-title"></h2>
+      <p id="contact-intro"></p>
+      <div id="contact-content"></div>
+      <p id="contact-app-info"></p>
+    </section>
+
     <p id="date"></p>
 
     <section class="card">
@@ -81,18 +88,13 @@
       <div id="exceptions-content"></div>
     </section>
 
-    <section class="card">
-      <h2 id="contact-title"></h2>
-      <div id="contact-content"></div>
-    </section>
-
     <footer id="footer"></footer>
   </div>
 
   <script>
     const texts = {
       de: {
-        pageTitle: "Datenlöschung – Meine App",
+        pageTitle: "Datenlöschung – QReady",
         date: "Stand: Oktober 2025",
         manualTitle: "Welche Daten manuell gelöscht werden können",
         manualContent: `
@@ -116,10 +118,12 @@
           <p>Das gilt ebenfalls für kopierte Fragen. Möchte ein Nutzer diese entfernen, muss dies beim kopierten Modul erfolgen, da diese an die Kopie gebunden sind.</p>
         `,
         contactTitle: "Kontakt für Löschanfragen",
+        contactIntro: "Wende dich für das Löschen deiner Daten an unseren Support unter:",
+        contactAppInfo: "Oder lösche deine Daten direkt in der App unter: <span class='kbd'>Profil → Account löschen</span>.",
         contactContent: `
           E-Mail: <a href="mailto:contact.qready@gmail.com">contact.qready@gmail.com</a><br>
         `,
-        footer: "© 2025 Meine App – Alle Rechte vorbehalten."
+        footer: "© 2025 QReady – Alle Rechte vorbehalten."
       },
       en: {
         pageTitle: "Data Deletion – QReady",
@@ -146,8 +150,10 @@
           <p>This also applies to copied questions. To delete these, they must be removed from the copied module, as they are bound to it.</p>
         `,
         contactTitle: "Contact for deletion requests",
+        contactIntro: "Contact our support for data deletion at:",
+        contactAppInfo: "Or delete your data directly in the app under: <span class='kbd'>Profile → Delete Account</span>.",
         contactContent: `
-          Email: <a href="mailto:privacy@my-app.com">privacy@my-app.com</a><br>
+          Email: <a href="mailto:contact.qready@gmail.com">contact.qready@gmail.com</a><br>
         `,
         footer: "© 2025 QReady – All rights reserved."
       }
@@ -167,7 +173,9 @@
       document.getElementById('exceptions-title').textContent = t.exceptionsTitle;
       document.getElementById('exceptions-content').innerHTML = t.exceptionsContent;
       document.getElementById('contact-title').textContent = t.contactTitle;
+      document.getElementById('contact-intro').textContent = t.contactIntro;
       document.getElementById('contact-content').innerHTML = t.contactContent;
+      document.getElementById('contact-app-info').innerHTML = t.contactAppInfo;
       document.getElementById('footer').textContent = t.footer;
     }
 
