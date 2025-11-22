@@ -1,39 +1,130 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Open Deeplink</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QReady Deeplink Redirect</title>
+
+  <script>
+    window.onload = function () {
+      const params = new URLSearchParams(window.location.search);
+      const deepLink = params.get("deeplink");
+      const moduleId = params.get("moduleId");
+
+      // DeepLink inkl. search params zusammensetzen
+      let finalDeepLink = deepLink;
+      if (deepLink) {
+        try {
+          const url = new URL(deepLink);
+
+          // moduleId anhängen (falls vorhanden)
+          if (moduleId) {
+            url.searchParams.set("moduleId", moduleId);
+          }
+
+          finalDeepLink = url.toString();
+        } catch (e) {
+          console.warn("Ungültiger Deeplink:", deepLink);
+        }
+      }
+
+      const btn = document.getElementById("manualRedirectBtn");
+
+      if (finalDeepLink) {
+        finalDeepLink = finalDeepLink.replace("deeplink","");
+        btn.onclick = () => (window.location.href = finalDeepLink);
+
+        // Automatische Weiterleitung
+        setTimeout(() => {
+          window.location.href = finalDeepLink;
+        }, 500);
+      }
+    };
+  </script>
+
   <style>
+    :root {
+      --bg: #0b1220;
+      --card: #0c1f44;
+      --muted: #9ca3af;
+      --text: #e5e7eb;
+      --brand: #007bff;
+      --radius: 14px;
+      --shadow: 0 20px 45px rgba(0,0,0,.35);
+    }
+
     body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
+      font-family: system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
     }
+
+    .wrap {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 0;
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(8px);
+    }
+
+    h1 {
+      color: var(--brand);
+      margin-bottom: 18px;
+      text-align: center;
+    }
+
+    p {
+      color: var(--text);
+      text-align: center;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 30px;
+      box-shadow: var(--shadow);
+      margin-top: 40px;
+      text-align: center;
+    }
+
     button {
-      padding: 15px 30px;
-      font-size: 18px;
-      color: #fff;
-      background-color: #007bff;
+      padding: 14px 28px;
+      font-size: 16px;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
+      background-color: var(--brand);
+      color: white;
       cursor: pointer;
+      margin-top: 20px;
     }
+
     button:hover {
-      background-color: #0056b3;
+      background-color: #3395ff;
     }
   </style>
-  <script>
-    function openDeeplink() {
-      window.location.href = "exp://10.0.10.209:8081";
-    }
-  </script>
 </head>
+
 <body>
-  <button onclick="openDeeplink()">Open App</button>
+  <div class="wrap">
+    <header>
+      <div class="brand"><h2>QReady</h2></div>
+    </header>
+
+    <section class="card">
+      <h1>Weiterleitung läuft …</h1>
+      <p>Falls die automatische Weiterleitung nicht funktioniert hat:</p>
+      <button id="manualRedirectBtn">Manuell öffnen</button>
+    </section>
+  </div>
 </body>
 </html>
