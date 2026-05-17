@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAQ – Q-Ready</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --card: linear-gradient(160deg, #0b2d66, #0a1f47);
+      --muted: #c6d6ff;
+      --text: #eef4ff;
+      --brand: #95aaff;
+      --brand-2: #0b7cb5;
+      --radius: 14px;
+      --shadow: 0 20px 45px rgba(0,0,0,.35);
+    }
+
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: linear-gradient(135deg, #95aaff, #0b7cb5);
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    .wrap { max-width: 920px; margin: 0 auto; padding: 24px; }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 18px 0 8px;
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(8px);
+    }
+
+    .left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .left img { height: 34px; width: 34px; border-radius: 8px; }
+    .left h1 { margin: 0; font-size: 20px; }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-block;
+      border-radius: 12px;
+      padding: 9px 12px;
+      text-decoration: none;
+      border: 1px solid rgba(197,215,255,.28);
+      color: var(--text);
+    }
+
+    .btn:hover { background: rgba(198,214,255,.16); }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(197,215,255,.2);
+      margin-top: 18px;
+    }
+
+    h2 { margin: 0 0 10px; color: var(--brand); }
+    .muted { color: var(--muted); }
+
+    details {
+      background: linear-gradient(160deg, #123a7c, #0d2757);
+      border: 1px solid rgba(197,215,255,.2);
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+
+    details + details { margin-top: 10px; }
+    details summary { cursor: pointer; list-style: none; }
+    details summary::-webkit-details-marker { display: none; }
+
+    .kbd {
+      background: rgba(12,31,68,.6);
+      border: 1px solid rgba(197,215,255,.28);
+      border-bottom-width: 2px;
+      padding: 2px 6px;
+      border-radius: 8px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 13px;
+    }
+
+    @media (max-width: 720px) {
+      header {
+        flex-wrap: wrap;
+      }
+
+      .top-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .left h1 {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="left">
+        <img src="./Q-Ready.png" alt="Q-Ready Logo" />
+        <h1>Q-Ready FAQ</h1>
+      </div>
+      <div class="top-actions">
+        <a class="btn" href="./index.html">&larr; Back to support</a>
+      </div>
+    </header>
+
+    <section class="card">
+      <h2>Frequently Asked Questions (FAQ)</h2>
+      <p class="muted">Here you can find answers to the most common questions about Q-Ready.</p>
+
+      <details>
+        <summary>Why can’t I edit questions from modules I copied?</summary>
+        <div><p>You can only edit questions from modules you created yourself. Questions from copied modules are locked to preserve the integrity of the original module.</p></div>
+      </details>
+      <details>
+        <summary>Why does my answer status not change?</summary>
+        <div><p>Make sure your internet connection is stable when submitting answers. If the issue persists, restart the app.</p></div>
+      </details>
+      <details>
+        <summary>What is LaTeX?</summary>
+        <div><p>LaTeX is a typesetting system used for technical and scientific content. In Q-Ready, you can use it to format mathematical expressions and equations.</p></div>
+      </details>
+      <details>
+        <summary>How long does it take for my energy to recover?</summary>
+        <div><p>Energy recovers at a rate of 1 point every 2 hours, up to a maximum of 10 points. You can get extra energy by watching ads or buying energy packs.</p></div>
+      </details>
+      <details>
+        <summary>Can I change my selected learning goals?</summary>
+        <div><p>Yes, you can change your learning goals at any time in your profile under <span class="kbd">Profile - Edit Education Goals</span>.</p></div>
+      </details>
+      <details>
+        <summary>Why is my LaTeX not working?</summary>
+        <div><p>Use KaTeX syntax as documented at https://katex.org/docs/supported.html. Make sure delimiters for inline ($...$) and display math (\[...\]) are correct.</p></div>
+      </details>
+    </section>
+  </div>
+</body>
+</html>

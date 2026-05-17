@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact – Q-Ready</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --card: linear-gradient(160deg, #0b2d66, #0a1f47);
+      --muted: #c6d6ff;
+      --text: #eef4ff;
+      --brand: #95aaff;
+      --brand-2: #0b7cb5;
+      --radius: 14px;
+      --shadow: 0 20px 45px rgba(0,0,0,.35);
+    }
+
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: linear-gradient(135deg, #95aaff, #0b7cb5);
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    .wrap { max-width: 920px; margin: 0 auto; padding: 24px; }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 18px 0 8px;
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(8px);
+    }
+
+    .left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .left img { height: 34px; width: 34px; border-radius: 8px; }
+    .left h1 { margin: 0; font-size: 20px; }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-block;
+      border-radius: 12px;
+      padding: 9px 12px;
+      text-decoration: none;
+      border: 1px solid rgba(197,215,255,.28);
+      color: var(--text);
+    }
+
+    .btn:hover { background: rgba(198,214,255,.16); }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(197,215,255,.2);
+      margin-top: 18px;
+    }
+
+    h2 { margin: 0 0 10px; color: var(--brand); }
+    .muted { color: var(--muted); }
+
+    .kbd {
+      background: rgba(12,31,68,.6);
+      border: 1px solid rgba(197,215,255,.28);
+      border-bottom-width: 2px;
+      padding: 2px 6px;
+      border-radius: 8px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 13px;
+    }
+
+    a {
+      color: #d7e4ff;
+      text-decoration: none;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    @media (max-width: 720px) {
+      header { flex-wrap: wrap; }
+      .top-actions { width: 100%; justify-content: flex-start; }
+      .left h1 { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="left">
+        <img src="./Q-Ready.png" alt="Q-Ready Logo" />
+        <h1>Q-Ready Contact</h1>
+      </div>
+      <div class="top-actions">
+        <a class="btn" href="./index.html">&larr; Back to support</a>
+      </div>
+    </header>
+
+    <section class="card" id="contact">
+      <h2>Contact</h2>
+      <p class="muted">Send us a short email with a description of your issue, and we will get back to you as quickly as possible.</p>
+      <p class="muted">Direct email: <a href="mailto:contact.qready@gmail.com">contact.qready@gmail.com</a></p>
+    </section>
+
+    <section class="card" id="quick-help">
+      <h2>Quick help</h2>
+      <ul>
+        <li>Change your learning goals (<span class="kbd">Profile - Edit Education Goals</span>).</li>
+        <li>Change your app language (<span class="kbd">Profile - Edit Language</span>).</li>
+        <li>Make sure your internet connection is stable when submitting answers.</li>
+      </ul>
+      <p class="muted">Tip: A short screen recording (QuickTime / iOS Screen Recording) helps us a lot.</p>
+      <a class="btn" href="./faq.html">Common issues and solutions</a>
+    </section>
+
+    <section class="card" id="report-bug">
+      <h2>Report a bug</h2>
+      <p>If possible, please include:</p>
+      <ul>
+        <li>Device and iOS version (for example: iPhone 15, iOS 18)</li>
+        <li>Steps to reproduce (1...2...3...)</li>
+        <li>Screenshot or screen recording</li>
+      </ul>
+      <p>You can attach files (logs, screenshots) to the support email: <a href="mailto:contact.qready@gmail.com">contact.qready@gmail.com</a></p>
+    </section>
+  </div>
+</body>
+</html>

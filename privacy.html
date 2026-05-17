@@ -1,66 +1,82 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AGB & Datenschutz – Neue App</title>
   <style>
     :root {
-      --bg: #0b1220;
-      --card: #0c1f44;
-      --muted: #9ca3af;
-      --text: #e5e7eb;
-      --brand: #007bff;
+      --bg: #f7f8fb;
+      --card: linear-gradient(160deg, #0b2d66, #0a1f47);
+      --muted: #c6d6ff;
+      --text: #eef4ff;
+      --brand: #95aaff;
       --radius: 14px;
       --shadow: 0 20px 45px rgba(0,0,0,.35);
     }
     body {
       margin: 0;
       font-family: system-ui, sans-serif;
-      background: var(--bg);
+      background: linear-gradient(135deg, #95aaff, #0b7cb5);
       color: var(--text);
       line-height: 1.6;
     }
     .wrap { max-width: 920px; margin: 0 auto; padding: 24px; }
     header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 20px 0; position: sticky; top: 0; backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 18px 0 8px;
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(8px);
     }
-    .brand h1 { font-size: 22px; margin: 0; }
+    .left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+    .left img { height: 34px; width: 34px; border-radius: 8px; }
+    .left h1 { margin: 0; font-size: 20px; }
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn {
+      display: inline-block;
+      border-radius: 12px;
+      padding: 9px 12px;
+      text-decoration: none;
+      border: 1px solid rgba(197,215,255,.28);
+      color: var(--text);
+    }
+    .btn:hover { background: rgba(198,214,255,.16); }
     h2 { margin-top: 1.8rem; color: var(--brand); }
     p, ul { color: var(--text); }
-    .card { background: var(--card); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); margin-bottom: 18px; }
+    .card { background: var(--card); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); margin-bottom: 18px; border: 1px solid rgba(197,215,255,.2); }
     footer { margin-top: 3rem; font-size: 0.9rem; color: var(--muted); text-align: center; }
-    .toggle {
-      display: flex; align-items: center; gap: 8px; cursor: pointer;
+    a { color: #d7e4ff; text-decoration: none; }
+    a:hover { color: #ffffff; text-decoration: underline; }
+
+    @media (max-width: 720px) {
+      header { flex-wrap: wrap; }
+      .top-actions { width: 100%; justify-content: flex-start; }
+      .left h1 { font-size: 18px; }
     }
-    .toggle input {
-      width: 40px; height: 20px; appearance: none;
-      background: #444; border-radius: 20px;
-      position: relative; outline: none; cursor: pointer;
-      transition: background 0.3s;
-    }
-    .toggle input:checked { background: var(--brand); }
-    .toggle input::before {
-      content: ''; width: 16px; height: 16px; background: white;
-      border-radius: 50%; position: absolute; top: 2px; left: 2px;
-      transition: transform 0.3s;
-    }
-    .toggle input:checked::before { transform: translateX(20px); }
-    a { color: #66b2ff; text-decoration: none; }
-    a:hover { color: #99ccff; text-decoration: underline; }
   </style>
 </head>
 <body>
   <div class="wrap">
     <header>
-      <div class="brand">
+      <div class="left">
+        <img src="./Q-Ready.png" alt="Q-Ready Logo" />
         <h1 id="page-title"></h1>
       </div>
-      <div class="toggle">
-        <span>DE</span>
-        <input type="checkbox" id="langToggle" />
-        <span>EN</span>
+      <div class="top-actions">
+        <a class="btn" href="./index.html" id="backLink"></a>
       </div>
     </header>
 
@@ -172,6 +188,7 @@
           <strong>KI-Funktionen:</strong><br>
           KI wird verwendet, wenn der Nutzer dies explizit auswählt (z. B. 'Mit KI erstellen'). Alle KI-Nutzungen werden transparent angezeigt.
         `,
+        back: "← Zurück zum Support",
         footer: "© 2025 Neue App – Alle Rechte vorbehalten."
       },
       en: {
@@ -240,12 +257,12 @@
           <strong>AI Features:</strong><br>
           AI is used only if explicitly selected by the user (e.g., 'Create with AI'). All AI usage is transparent.
         `,
+        back: "← Back to support",
         footer: "© 2025 New App – All rights reserved."
       }
     };
 
-    const langToggle = document.getElementById('langToggle');
-    let currentLang = 'de';
+    let currentLang = 'en';
 
     function updateTexts() {
       const t = texts[currentLang];
@@ -265,13 +282,9 @@
       document.getElementById('multilingual-content').innerHTML = t.multilingualContent;
       document.getElementById('special-title').textContent = t.specialTitle;
       document.getElementById('special-content').innerHTML = t.specialContent;
+      document.getElementById('backLink').textContent = t.back;
       document.getElementById('footer').textContent = t.footer;
     }
-
-    langToggle.addEventListener('change', () => {
-      currentLang = langToggle.checked ? 'en' : 'de';
-      updateTexts();
-    });
 
     updateTexts();
   </script>
