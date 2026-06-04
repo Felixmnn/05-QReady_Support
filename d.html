@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="icon" type="image/png" href="/favicon.png" />
+	<title>Open QReady</title>
+
+	<style>
+		:root {
+			--bg: #f7f8fb;
+			--card: linear-gradient(160deg, #0b2d66, #0a1f47);
+			--card-2: linear-gradient(160deg, #123a7c, #0d2757);
+			--muted: #c6d6ff;
+			--text: #eef4ff;
+			--brand: #ff7a00;
+			--brand-2: #ffb347;
+			--radius: 14px;
+			--shadow: 0 18px 36px rgba(18, 33, 58, 0.12);
+		}
+
+		* { box-sizing: border-box; }
+
+		body {
+			margin: 0;
+			font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+			background: linear-gradient(135deg, #95aaff, #0b7cb5);
+			color: var(--text);
+			line-height: 1.55;
+			min-height: 100vh;
+			display: grid;
+			place-items: center;
+			padding: 20px;
+		}
+
+		.card {
+			width: min(760px, 100%);
+			background: var(--card);
+			border-radius: var(--radius);
+			border: 1px solid rgba(197, 215, 255, 0.2);
+			box-shadow: var(--shadow);
+			padding: 24px;
+		}
+
+		h1 {
+			margin: 0 0 8px;
+			font-size: clamp(24px, 4vw, 34px);
+		}
+
+		p {
+			margin: 0;
+			color: var(--muted);
+		}
+
+		.status {
+			margin-top: 14px;
+			background: var(--card-2);
+			border: 1px solid rgba(197, 215, 255, 0.2);
+			border-radius: 12px;
+			padding: 12px 14px;
+			color: var(--text);
+			font-weight: 600;
+		}
+
+		.actions {
+			margin-top: 18px;
+			display: grid;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 10px;
+		}
+
+		.btn {
+			border-radius: 12px;
+			padding: 11px 14px;
+			text-decoration: none;
+			border: 1px solid rgba(197, 215, 255, 0.28);
+			color: var(--text);
+			background: transparent;
+			font: inherit;
+			text-align: center;
+			cursor: pointer;
+		}
+
+		.btn:hover { background: rgba(198, 214, 255, 0.16); }
+
+		.btn-primary {
+			border-color: transparent;
+			background: linear-gradient(135deg, var(--brand), var(--brand-2));
+			color: #2f1900;
+			font-weight: 700;
+		}
+
+		.hint {
+			margin-top: 14px;
+			font-size: 14px;
+			color: var(--muted);
+		}
+
+		.platform {
+			margin-top: 8px;
+			color: #dbe6ff;
+			font-size: 14px;
+		}
+
+		@media (max-width: 720px) {
+			.actions {
+				grid-template-columns: 1fr;
+			}
+		}
+	</style>
+</head>
+<body>
+	<main class="card">
+		<h1>Opening QReady ...</h1>
+		<p id="description">We are taking you to the right place automatically.</p>
+
+		<div id="status" class="status">Getting things ready ...</div>
+		<div id="platformInfo" class="platform"></div>
+
+		<div class="actions">
+			<button id="openAppBtn" class="btn btn-primary" type="button">Open app now</button>
+			<a id="iosStoreBtn" class="btn" href="https://apps.apple.com/us/app/qready/id6747379667" target="_blank" rel="noopener noreferrer">iOS App Store</a>
+			<a id="androidStoreBtn" class="btn" href="https://play.google.com/store/search?q=qready&c=apps" target="_blank" rel="noopener noreferrer">Android Play Store</a>
+		</div>
+
+		<p class="hint">If the automatic redirect does not work, use the buttons above.</p>
+	</main>
+
+	<script>
+		(function () {
+			var DEEP_LINK = "node-ready://";
+			var IOS_STORE = "https://apps.apple.com/us/app/qready/id6747379667";
+			var ANDROID_STORE_APP = "market://details?id=com.felix08.nodeready";
+			var ANDROID_STORE_WEB = "https://play.google.com/store/apps/details?id=com.felix08.nodeready";
+			var OPEN_DELAY_MS = 120;
+			var FALLBACK_DELAY_MS = 1800;
+
+			var statusEl = document.getElementById("status");
+			var platformInfoEl = document.getElementById("platformInfo");
+			var descEl = document.getElementById("description");
+			var openAppBtn = document.getElementById("openAppBtn");
+			var iosStoreBtn = document.getElementById("iosStoreBtn");
+			var androidStoreBtn = document.getElementById("androidStoreBtn");
+
+			iosStoreBtn.href = IOS_STORE;
+			androidStoreBtn.href = ANDROID_STORE_APP;
+
+			function detectPlatform() {
+				var ua = navigator.userAgent || "";
+				var isIOS = /iPad|iPhone|iPod/.test(ua) ||
+					(navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+				var isAndroid = /Android/i.test(ua);
+
+				if (isIOS) return "ios";
+				if (isAndroid) return "android";
+				return "other";
+			}
+
+			function openDeepLink() {
+				window.location.href = DEEP_LINK;
+			}
+
+			function fallbackToStore(platform) {
+				if (platform === "ios") {
+					window.location.replace(IOS_STORE);
+					return;
+				}
+				if (platform === "android") {
+					window.location.replace(ANDROID_STORE_APP);
+				}
+			}
+
+			openAppBtn.addEventListener("click", openDeepLink);
+
+			var platform = detectPlatform();
+			var humanPlatform = platform === "ios" ? "iOS" : (platform === "android" ? "Android" : "Unbekannt / Desktop");
+			platformInfoEl.textContent = "Detected device: " + humanPlatform;
+
+			if (platform !== "android") {
+				androidStoreBtn.href = ANDROID_STORE_WEB;
+			}
+
+			androidStoreBtn.addEventListener("click", function (event) {
+				if (detectPlatform() !== "android") {
+					return;
+				}
+
+				event.preventDefault();
+				window.location.href = ANDROID_STORE_APP;
+
+				setTimeout(function () {
+					if (!document.hidden) {
+						window.location.href = ANDROID_STORE_WEB;
+					}
+				}, 1200);
+			});
+
+			if (platform === "other") {
+				statusEl.textContent = "This device cannot open the app directly.";
+				descEl.textContent = "Please download QReady from the App Store or Google Play.";
+				return;
+			}
+
+			statusEl.textContent = "Trying to open the app ...";
+
+			var fallbackTimer = null;
+			var openTimer = setTimeout(function () {
+				openDeepLink();
+			}, OPEN_DELAY_MS);
+
+			fallbackTimer = setTimeout(function () {
+				if (!document.hidden) {
+					statusEl.textContent = "App not found. Taking you to the store ...";
+					fallbackToStore(platform);
+
+					if (platform === "android") {
+						setTimeout(function () {
+							if (!document.hidden) {
+								window.location.replace(ANDROID_STORE_WEB);
+							}
+						}, 1200);
+					}
+				}
+			}, FALLBACK_DELAY_MS);
+
+			document.addEventListener("visibilitychange", function () {
+				if (document.hidden) {
+					clearTimeout(openTimer);
+					clearTimeout(fallbackTimer);
+				}
+			});
+		})();
+	</script>
+</body>
+</html>
