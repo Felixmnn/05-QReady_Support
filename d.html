@@ -40,6 +40,41 @@
 			border: 1px solid rgba(197, 215, 255, 0.2);
 			box-shadow: var(--shadow);
 			padding: 24px;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.card::before,
+		.card::after {
+			content: "";
+			position: absolute;
+			border-radius: 999px;
+			pointer-events: none;
+			filter: blur(6px);
+			z-index: 0;
+		}
+
+		.card::before {
+			width: 180px;
+			height: 180px;
+			right: -40px;
+			top: -50px;
+			background: radial-gradient(circle at 30% 30%, rgba(255, 179, 71, 0.28), rgba(255, 179, 71, 0.03));
+			animation: floatOrbA 12s ease-in-out infinite;
+		}
+
+		.card::after {
+			width: 140px;
+			height: 140px;
+			left: -28px;
+			bottom: -38px;
+			background: radial-gradient(circle at 30% 30%, rgba(149, 170, 255, 0.24), rgba(149, 170, 255, 0.03));
+			animation: floatOrbB 14s ease-in-out infinite;
+		}
+
+		.card > * {
+			position: relative;
+			z-index: 1;
 		}
 
 		h1 {
@@ -70,6 +105,10 @@
 		}
 
 		.btn {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 8px;
 			border-radius: 12px;
 			padding: 11px 14px;
 			text-decoration: none;
@@ -102,6 +141,26 @@
 			font-size: 14px;
 		}
 
+		.store-icon {
+			width: 20px;
+			height: 20px;
+			object-fit: contain;
+			border-radius: 4px;
+			flex: 0 0 20px;
+		}
+
+		@keyframes floatOrbA {
+			0% { transform: translate(0, 0) scale(1); }
+			50% { transform: translate(-4px, 5px) scale(1.02); }
+			100% { transform: translate(0, 0) scale(1); }
+		}
+
+		@keyframes floatOrbB {
+			0% { transform: translate(0, 0) scale(1); }
+			50% { transform: translate(5px, -4px) scale(1.02); }
+			100% { transform: translate(0, 0) scale(1); }
+		}
+
 		@media (max-width: 720px) {
 			.actions {
 				grid-template-columns: 1fr;
@@ -119,8 +178,8 @@
 
 		<div class="actions">
 			<button id="openAppBtn" class="btn btn-primary" type="button">Open app now</button>
-			<a id="iosStoreBtn" class="btn" href="https://apps.apple.com/us/app/qready/id6747379667" target="_blank" rel="noopener noreferrer">iOS App Store</a>
-			<a id="androidStoreBtn" class="btn" href="https://play.google.com/store/search?q=qready&c=apps" target="_blank" rel="noopener noreferrer">Android Play Store</a>
+			<a id="iosStoreBtn" class="btn" href="https://apps.apple.com/us/app/qready/id6747379667" target="_blank" rel="noopener noreferrer"><img class="store-icon" src="./appleStore.png" alt="" aria-hidden="true" />iOS App Store</a>
+			<a id="androidStoreBtn" class="btn" href="https://play.google.com/store/search?q=qready&c=apps" target="_blank" rel="noopener noreferrer"><img class="store-icon" src="./googleStore.png" alt="" aria-hidden="true" />Android Play Store</a>
 		</div>
 
 		<p class="hint">If the automatic redirect does not work, use the buttons above.</p>
@@ -173,7 +232,7 @@
 			openAppBtn.addEventListener("click", openDeepLink);
 
 			var platform = detectPlatform();
-			var humanPlatform = platform === "ios" ? "iOS" : (platform === "android" ? "Android" : "Unbekannt / Desktop");
+			var humanPlatform = platform === "ios" ? "iOS" : (platform === "android" ? "Android" : "Web/Desktop");
 			platformInfoEl.textContent = "Detected device: " + humanPlatform;
 
 			if (platform !== "android") {
@@ -196,8 +255,8 @@
 			});
 
 			if (platform === "other") {
-				statusEl.textContent = "This device cannot open the app directly.";
-				descEl.textContent = "Please download QReady from the App Store or Google Play.";
+				statusEl.textContent = "Web device detected.";
+				descEl.textContent = "Open this page on your phone for direct app redirect.";
 				return;
 			}
 
