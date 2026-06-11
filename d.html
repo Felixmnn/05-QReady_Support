@@ -178,7 +178,10 @@
 
 		<div class="actions">
 			<button id="openAppBtn" class="btn btn-primary" type="button">Open app now</button>
-			<button id="iosStoreBtn" class="btn" type="button"><img class="store-icon" src="./appleStore.png" alt="" aria-hidden="true" />iOS App Store</button>
+			<a id="iosStoreBtn" class="btn" href="https://apps.apple.com/app/id6747379667" target="_blank" rel="noopener noreferrer">
+				<img class="store-icon" src="./appleStore.png" alt="" aria-hidden="true" />
+				iOS App Store
+			</a>
 			<button id="androidStoreBtn" class="btn" type="button"><img class="store-icon" src="./googleStore.png" alt="" aria-hidden="true" />Android Play Store</button>
 		</div>
 
@@ -201,9 +204,7 @@
 			var iosStoreBtn = document.getElementById("iosStoreBtn");
 			var androidStoreBtn = document.getElementById("androidStoreBtn");
 
-			iosStoreBtn.addEventListener("click", function () {
-				window.location.href = IOS_STORE;
-			});
+			
 
 			androidStoreBtn.addEventListener("click", function () {
 				window.location.href = ANDROID_STORE_WEB;
