@@ -178,8 +178,8 @@
 
 		<div class="actions">
 			<button id="openAppBtn" class="btn btn-primary" type="button">Open app now</button>
-			<a id="iosStoreBtn" class="btn" href="https://apps.apple.com/us/app/qready/id6747379667" target="_blank" rel="noopener noreferrer"><img class="store-icon" src="./appleStore.png" alt="" aria-hidden="true" />iOS App Store</a>
-			<a id="androidStoreBtn" class="btn" href="https://play.google.com/store/search?q=qready&c=apps" target="_blank" rel="noopener noreferrer"><img class="store-icon" src="./googleStore.png" alt="" aria-hidden="true" />Android Play Store</a>
+			<button id="iosStoreBtn" class="btn" type="button"><img class="store-icon" src="./appleStore.png" alt="" aria-hidden="true" />iOS App Store</button>
+			<button id="androidStoreBtn" class="btn" type="button"><img class="store-icon" src="./googleStore.png" alt="" aria-hidden="true" />Android Play Store</button>
 		</div>
 
 		<p class="hint">If the automatic redirect does not work, use the buttons above.</p>
@@ -201,8 +201,13 @@
 			var iosStoreBtn = document.getElementById("iosStoreBtn");
 			var androidStoreBtn = document.getElementById("androidStoreBtn");
 
-			iosStoreBtn.href = IOS_STORE;
-			androidStoreBtn.href = ANDROID_STORE_APP;
+			iosStoreBtn.addEventListener("click", function () {
+				window.location.href = IOS_STORE;
+			});
+
+			androidStoreBtn.addEventListener("click", function () {
+				window.location.href = ANDROID_STORE_WEB;
+			});
 
 			function detectPlatform() {
 				var ua = navigator.userAgent || "";
