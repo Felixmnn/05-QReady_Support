@@ -14,6 +14,24 @@
       const appleStoreUrl = params.get("appleStoreUrl") || "https://apps.apple.com/us/app/qready/id6747379667";
       const googleStoreUrl = params.get("googleStoreUrl") || "https://play.google.com/store/apps/details?id=com.felix08.nodeready";
 
+      // Erkenne WebView-Umgebungen (TikTok, Instagram, etc.)
+      const isInWebView = () => {
+        const ua = navigator.userAgent.toLowerCase();
+        return (
+          ua.includes("tiktok") ||
+          ua.includes("instagram") ||
+          ua.includes("facebook") ||
+          ua.includes("snapchat") ||
+          ua.includes("webview") ||
+          ua.includes("wv") ||
+          (navigator.standalone === undefined && ua.includes("mobile"))
+        );
+      };
+
+      // Erkenne iOS/Android
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+      const isAndroid = /Android/.test(navigator.userAgent);
+
       // DeepLink inkl. search params zusammensetzen
       let finalDeepLink = deepLink;
       if (deepLink) {
@@ -39,19 +57,39 @@
       appleLink.href = appleStoreUrl;
       googleLink.href = googleStoreUrl;
 
+      const inWebView = isInWebView();
+      const redirectToStoreUrl = isIOS ? appleStoreUrl : googleStoreUrl;
+
       if (finalDeepLink) {
         finalDeepLink = finalDeepLink.replace("deeplink","");
         btn.onclick = () => (window.location.href = finalDeepLink);
 
-        // Automatische Weiterleitung
+        // In WebView: Direkt zum App Store (TikTok erlaubt keine DeepLinks)
+        if (inWebView) {
+          window.location.href = redirectToStoreUrl;
+          return;
+        }
+
+        // Außerhalb WebView: Versuche DeepLink zu öffnen
+        let deepLinkOpened = false;
+        const openTime = Date.now();
+
+        // Erkenne wenn App geöffnet wurde (Seite verliert den Fokus)
+        window.addEventListener("blur", () => {
+          deepLinkOpened = true;
+        });
+
+        // Automatische Weiterleitung zum DeepLink
         setTimeout(() => {
           window.location.href = finalDeepLink;
-        }, 500);
+        }, 300);
 
-        // Fallback anzeigen, falls App nicht installiert ist
+        // Fallback anzeigen, falls App nicht installiert ist (nach 2s)
         setTimeout(() => {
-          fallbackSection.style.display = "block";
-        }, 1800);
+          if (!deepLinkOpened) {
+            fallbackSection.style.display = "block";
+          }
+        }, 2000);
       } else {
         fallbackSection.style.display = "block";
       }
