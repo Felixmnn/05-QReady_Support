@@ -100,21 +100,22 @@
 		.actions {
 			margin-top: 18px;
 			display: grid;
-			grid-template-columns: repeat(3, minmax(0, 1fr));
+			grid-template-columns: repeat(2, minmax(0, 1fr));
 			gap: 10px;
 		}
 
 		.btn {
 			display: flex;
+			flex-direction: column;
 			align-items: center;
 			justify-content: center;
-			gap: 8px;
+			gap: 6px;
 			border-radius: 12px;
-			padding: 11px 14px;
+			padding: 14px 14px;
 			text-decoration: none;
 			border: 1px solid rgba(197, 215, 255, 0.28);
 			color: var(--text);
-			background: transparent;
+			background: linear-gradient(135deg, #111832, #0d1b3a);
 			font: inherit;
 			text-align: center;
 			cursor: pointer;
@@ -142,11 +143,11 @@
 		}
 
 		.store-icon {
-			width: 20px;
-			height: 20px;
+			width: 36px;
+			height: 36px;
 			object-fit: contain;
-			border-radius: 4px;
-			flex: 0 0 20px;
+			border-radius: 6px;
+			flex: 0 0 36px;
 		}
 
 		@keyframes floatOrbA {
@@ -161,7 +162,16 @@
 			100% { transform: translate(0, 0) scale(1); }
 		}
 
-		@media (max-width: 720px) {
+		.app-logo {
+			display: block;
+			width: 100px;
+			height: 100px;
+			object-fit: contain;
+			border-radius: 18px;
+			margin: 0 auto 20px;
+		}
+
+		@media (max-width: 360px) {
 			.actions {
 				grid-template-columns: 1fr;
 			}
@@ -170,22 +180,21 @@
 </head>
 <body>
 	<main class="card">
-		<h1>Opening QReady ...</h1>
-		<p id="description">We are taking you to the right place automatically.</p>
-
-		<div id="status" class="status">Getting things ready ...</div>
-		<div id="platformInfo" class="platform"></div>
-
+		<img class="app-logo" src="./Q-Ready.png" alt="QReady Logo" />
+		<h1>Redirecting to QReady:</h1>
+		<p id="description">We are taking you to the right place automatically...</p>
 		<div class="actions">
-			<button id="openAppBtn" class="btn btn-primary" type="button">Open app now</button>
 			<a id="iosStoreBtn" class="btn" href="https://apps.apple.com/app/id6747379667" target="_blank" rel="noopener noreferrer">
 				<img class="store-icon" src="./appleStore.png" alt="" aria-hidden="true" />
 				iOS App Store
 			</a>
-			<button id="androidStoreBtn" class="btn" type="button"><img class="store-icon" src="./googleStore.png" alt="" aria-hidden="true" />Android Play Store</button>
+			<a id="androidStoreBtn" class="btn" href="https://play.google.com/store/apps/details?id=com.felix08.nodeready" target="_blank" rel="noopener noreferrer">
+				<img class="store-icon" src="./googleStore.png" alt="" aria-hidden="true" />
+				Android Play Store
+			</a>
 		</div>
+		<p id="description">If nothing happens, either go to the store and search for "QReady" or click the dots ⋮ and select open in browser.</p >
 
-		<p class="hint">If the automatic redirect does not work, use the buttons above.</p>
 	</main>
 
 	<script>
